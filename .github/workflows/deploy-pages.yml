@@ -50,6 +50,7 @@ jobs:
         working-directory: ${{ env.BUILD_PATH }}
 
       - name: Build with Astro
+        run: echo ${{ toJson(vars) }}
         run: |
           pnpm build \
             --site "${{ steps.pages.outputs.origin }}" \
