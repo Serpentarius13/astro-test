@@ -32,6 +32,9 @@ jobs:
           actions/checkout@v4
           #? if [ -f "${{ github.workspace }}/yarn.lock" ]; then
           #? variable ${{ github.workspace }}, bash
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 9.4.0
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -41,10 +44,8 @@ jobs:
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
-      - name: Enable pnpm
-        run: corepack enable
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
         working-directory: ${{ env.BUILD_PATH }}
       - name: Build with Astro
         run: |
