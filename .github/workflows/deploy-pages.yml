@@ -28,31 +28,36 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses:
-          actions/checkout@v4
-          #? if [ -f "${{ github.workspace }}/yarn.lock" ]; then
-          #? variable ${{ github.workspace }}, bash
+        uses: actions/checkout@v4
+
       - uses: pnpm/action-setup@v2
         with:
           version: 9.4.0
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: "20"
           cache: pnpm
           cache-dependency-path: pnpm-lock.yaml
+
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
         working-directory: ${{ env.BUILD_PATH }}
+
       - name: Build with Astro
         run: |
           pnpm build \
             --site "${{ steps.pages.outputs.origin }}" \
             --base "${{ steps.pages.outputs.base_path }}"
         working-directory: ${{ env.BUILD_PATH }}
+        env:
+          PUBLIC_ENV_VARIABLE: ${{ vars.PUBLIC_ENV_VARIABLE }}
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
