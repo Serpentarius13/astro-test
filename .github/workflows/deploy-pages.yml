@@ -50,7 +50,7 @@ jobs:
         working-directory: ${{ env.BUILD_PATH }}
 
       - name: check
-        run: echo ${{ vars.PUBLIC_ENV_VARIABLE }}
+        run: echo "${{ vars.PUBLIC_ENV_VARIABLE }}"
 
       - name: Build with Astro
         run: |
