@@ -1,5 +1,7 @@
 ---
 const envVariable = import.meta.env.PUBLIC_ENV_VARIABLE
+
+console.log(import.meta.env)
 ---
 
 <html lang="en">
@@ -12,6 +14,6 @@ const envVariable = import.meta.env.PUBLIC_ENV_VARIABLE
 	</head>
 	<body> 
 		<h1>Astro</h1>
-		{envVariable}
+		<p>{envVariable}</p>
 	</body>
 </html>
