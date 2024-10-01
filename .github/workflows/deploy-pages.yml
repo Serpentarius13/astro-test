@@ -84,16 +84,12 @@ jobs:
           name: build-${{github.ref_name}}-${{github.sha}}
           path: dist
 
-      - name: Deploy to sandbox via rsync
-        uses: trendyminds/github-actions-rsync@master
+      - name: rsync deployments
+        uses: burnett01/rsync-deployments@7.0.1
         with:
-          RSYNC_OPTIONS: -avzr --delete
-          RSYNC_TARGET: /var/www/dist
-          RSYNC_SOURCE: dist
-        env:
-          SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
-          SSH_USERNAME: ${{secrets.SSH_USERNAME}}
-          SSH_HOSTNAME: ${{secrets.SSH_HOSTNAME}}
-      # - name: Deploy to GitHub Pages
-      #   id: deployment
-      #   uses: actions/deploy-pages@v4
+          switches: -avzr --delete
+          path: dist/
+          remote_path: /var/www/html/
+          remote_host: ${{ secrets.SSH_HOSTNAME }}
+          remote_user: ${{ secrets.SSH_USERNAME }}
+          remote_key: ${{ secrets.DEPLOY_KEY }}
