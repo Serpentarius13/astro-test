@@ -51,9 +51,6 @@ jobs:
         run: pnpm install --frozen-lockfile
         working-directory: ${{ env.BUILD_PATH }}
 
-      - name: check
-        run: echo "${{ vars.PUBLIC_ENV_VARIABLE }}"
-
       - name: Build with Astro
         run: |
           pnpm build \
@@ -90,6 +87,6 @@ jobs:
           switches: -avzr --delete
           path: dist/
           remote_path: /var/www/html/
-          remote_host: ${{ secrets.SSH_HOSTNAME }}
-          remote_user: ${{ secrets.SSH_USERNAME }}
+          remote_host: ${{ secrets.DEPLOY_HOST }}
+          remote_user: ${{ secrets.DEPLOY_USER }}
           remote_key: ${{ secrets.DEPLOY_KEY }}
