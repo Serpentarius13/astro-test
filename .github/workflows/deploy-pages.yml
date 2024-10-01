@@ -2,7 +2,7 @@ name: Deploy Astro site to Pages
 
 on:
   push:
-    branches: ["master"]
+    branches: [master]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -41,7 +41,7 @@ jobs:
         with:
           node-version: "20"
           cache: pnpm
-          cache-dependency-path: pnpm-lock.yaml
+            pnpm-lock.yaml
 
       - name: Setup Pages
         id: pages
@@ -63,19 +63,40 @@ jobs:
         env:
           PUBLIC_ENV_VARIABLE: ${{ vars.PUBLIC_ENV_VARIABLE }}
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Upload build
+        uses: actions/upload-artifact@v3
         with:
+          name: ${{ env.BUILD_PATH }}-build
           path: ${{ env.BUILD_PATH }}/dist
+          if-no-files-found: error
+          retention-days: 1
 
   deploy:
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      # url: ${{ steps.deployment.outputs.page_url }}
     needs: build
     runs-on: ubuntu-latest
     name: Deploy
     steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - uses: actions/download-artifact@master
+        with:
+          name: ${{ env.BUILD_PATH }}-build
+          path: ${{ env.BUILD_PATH }}/dist
+
+      - name: Checkout code
+        uses: actions/checkout@v1
+
+      - name: Deploy to sandbox via rsync
+        uses: trendyminds/github-actions-rsync@master
+        with:
+          RSYNC_OPTIONS: -avzr --delete
+          RSYNC_TARGET: /var/www/dist
+          RSYNC_SOURCE: ${{ env.BUILD_PATH }}/dist
+        env:
+          SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
+          SSH_USERNAME: ${{secrets.SSH_USERNAME}}
+          SSH_HOSTNAME: ${{secrets.SSH_HOSTNAME}}
+      # - name: Deploy to GitHub Pages
+      #   id: deployment
+      #   uses: actions/deploy-pages@v4
