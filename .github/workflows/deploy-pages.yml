@@ -87,6 +87,6 @@ jobs:
           switches: -avzr --delete
           path: dist/
           remote_path: /var/www/html/
-          remote_host: ${{ secrets.DEPLOY_HOST }}
+          remote_host: ${{ secrets.DEPLOY_HOSTNAME }}
           remote_user: ${{ secrets.DEPLOY_USER }}
           remote_key: ${{ secrets.DEPLOY_KEY }}
