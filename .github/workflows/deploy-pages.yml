@@ -66,8 +66,8 @@ jobs:
       - name: Upload build
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ env.BUILD_PATH }}-build
-          path: ${{ env.BUILD_PATH }}/dist
+          name: build-${{github.ref_name}}-${{github.sha}}
+          path: dist
           if-no-files-found: error
           retention-days: 1
 
@@ -79,20 +79,17 @@ jobs:
     runs-on: ubuntu-latest
     name: Deploy
     steps:
-      - uses: actions/download-artifact@master
+      - uses: actions/download-artifact@v3
         with:
-          name: ${{ env.BUILD_PATH }}-build
-          path: ${{ env.BUILD_PATH }}/dist
-
-      - name: Checkout code
-        uses: actions/checkout@v1
+          name: build-${{github.ref_name}}-${{github.sha}}
+          path: dist
 
       - name: Deploy to sandbox via rsync
         uses: trendyminds/github-actions-rsync@master
         with:
           RSYNC_OPTIONS: -avzr --delete
           RSYNC_TARGET: /var/www/dist
-          RSYNC_SOURCE: ${{ env.BUILD_PATH }}/dist
+          RSYNC_SOURCE: dist
         env:
           SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
           SSH_USERNAME: ${{secrets.SSH_USERNAME}}
