@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      output1: ${{ steps.colors.outputs.colors }}
+      colors: ${{ steps.colors.outputs.colors }}
 
     steps:
       - name: Define Colors
