@@ -34,7 +34,7 @@ jobs:
 
       - name: Says hello in Typescript
         id: hello-ts
-        uses: Serpentarius13/ts-action
+        uses: Serpentarius13/ts-action@v0.0.1
         with:
           whom-to-greet: "The Matt Pocock"
 
