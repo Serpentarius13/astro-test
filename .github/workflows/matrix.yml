@@ -12,9 +12,10 @@ jobs:
   counter_matrix:
     continue-on-error: false
     strategy:
+      max-parallel: 2
       fail-fast: true
       matrix:
-        count: ${{ fromJSON(echo {0..inputs.count..1}) }}
+        count: ${{ join(echo {0..inputs.count..1}, ',') }} | echo "\'\[$1\]\'" | ${{ fromJSON($1) }}
     runs-on: ubuntu-latest
     steps:
       - name: Emit
