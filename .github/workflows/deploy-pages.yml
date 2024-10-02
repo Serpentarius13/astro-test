@@ -32,6 +32,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Reuses workflow
+        uses: ./.github/workflows/reusable.yml
+        with:
+          whom-to-greet: "The Flow of the World"
+
       - name: Says hello compositely
         id: hello-composite
         uses: ./.github/actions/hello-composite
