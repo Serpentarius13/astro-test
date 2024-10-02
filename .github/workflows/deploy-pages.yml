@@ -29,6 +29,11 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
+      - name: Says hello
+        uses: ./.github/actions/hello
+        with:
+          whom-to-greet: "The Magnificient Steiner"
+
       - name: Checkout
         uses: actions/checkout@v4
 
