@@ -36,7 +36,7 @@ jobs:
         id: hello-composite
         uses: ./.github/actions/hello-composite
         with:
-          who-to-greet: "Gamba"
+          whom-to-greet: "Gamba"
 
       - name: Gets random number
         run: echo "Random number is ${{steps.hello-composite.outputs.random-number}}"
