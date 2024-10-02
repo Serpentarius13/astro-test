@@ -16,6 +16,11 @@ runs:
       run: echo "::add-mask::Secret word"
       shell: bash
 
+    - name: Fails
+      run: exit 1
+      shell: bash
+      if: ${{ failure() }}
+
     - name: Say group
       run: |
         echo "::group::My title!"
