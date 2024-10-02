@@ -1,0 +1,7 @@
+{
+  "name": "Workflow",
+  "description": "CI workflow template.",
+  "iconName": "example-icon",
+  "categories": ["Go"],
+  "filePatterns": ["tsconfig.json"]
+}
