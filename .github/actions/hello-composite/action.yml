@@ -18,11 +18,11 @@ runs:
 
     - name: Say group
       run: |
-        ::group::{Title}
+        echo "::group::My title!"
         echo "Hello"
         echo "World"
         echo "!!!"
-        ::endgroup::
+        echo "::endgroup::"
       shell: bash
 
     - name: Say MD
