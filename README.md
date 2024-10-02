@@ -1,5 +1,7 @@
 # Astro Starter Kit: Minimal
 
+![Checks](https://github.com/Serpentarius13/github-actions-test/actions/workflows/deploy-pages.yml/badge.svg)
+
 ```sh
 npm create astro@latest -- --template minimal
 ```
