@@ -32,7 +32,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Says hello in Typescript
+        id: hello-ts
+        uses: Serpentarius13/ts-action
+        with:
+          whom-to-greet: "The Matt Pocock"
+
+      - name: Says time in Typescript
+        run: echo "Time is ${{steps['hello-ts'].outputs.time}}"
+
       - name: Says hello
+        id: hello
         uses: ./.github/actions/hello
         with:
           whom-to-greet: "The Magnificient Steiner"
