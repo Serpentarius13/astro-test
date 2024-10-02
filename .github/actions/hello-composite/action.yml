@@ -12,6 +12,29 @@ outputs:
 runs:
   using: "composite"
   steps:
+    - name: Say secret
+      run: echo "::add-mask::Secret word"
+      shell: bash
+
+    - name: Say group
+      run: |
+        ::group::{Title}
+        echo "Hello"
+        echo "World"
+        echo "!!!"
+        ::endgroup::
+      shell: bash
+
+    - name: Say MD
+      run: |
+        echo "### House M.D." >> $GITHUB_STEP_SUMMARY
+      shell: bash
+
+    - name: Notice me
+      run: |
+        echo "::notice file=tsconfig.json,line=1,col=5,endColumn=7::Missing semicolon"
+      shell: bash
+
     - name: Random number generator
       id: random-number-generator
       run: echo "random-number=$((1 + RANDOM % 10))" >> $GITHUB_OUTPUT
