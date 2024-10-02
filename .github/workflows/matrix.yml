@@ -9,13 +9,23 @@ on:
         type: number
 
 jobs:
+  prepare_matrix:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Define Colors
+        id: colors
+        run: |
+          echo 'colors=[1, 2, 3]' >> "$GITHUB_OUTPUT"
+
   counter_matrix:
+    needs: prepare_matrix
     continue-on-error: false
     strategy:
       max-parallel: 2
       fail-fast: true
       matrix:
-        count: ${{ join(echo {0..inputs.count..1}, ',') }} | echo "\'\[$1\]\'" | ${{ fromJSON($1) }}
+        count: ${{ fromJSON(needs.prepare_matrix.outputs.colors) }}
     runs-on: ubuntu-latest
     steps:
       - name: Emit
