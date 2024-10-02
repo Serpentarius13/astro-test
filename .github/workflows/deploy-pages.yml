@@ -23,6 +23,11 @@ env:
   # BUILD_PATH: subfolder
 
 jobs:
+  matrix:
+    uses: ./.github/workflows/matrix.yml
+    with:
+      count: 10
+
   reuse:
     uses: ./.github/workflows/reusable.yml
     with:
