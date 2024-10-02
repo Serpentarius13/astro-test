@@ -36,7 +36,8 @@ jobs:
         uses: ./.github/actions/hello
         with:
           whom-to-greet: "The Magnificient Steiner"
-
+      - name: Says time
+        run: echo "Time is ${{steps.hello.outputs.time}}"
       - uses: pnpm/action-setup@v2
         with:
           version: 9.4.0
